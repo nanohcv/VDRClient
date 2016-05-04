@@ -32,8 +32,8 @@ namespace VDRClient
         {
             base.OnNavigatedTo(e);
             VDR.VDR vdr = new VDR.VDR(VDR.Configuration.VDRs[0]);
-            VDR.XmlApiVersion v = await vdr.GetXMLAPIVersion();
-            Debug.WriteLine(v.Major.ToString() + "." + v.Minor.ToString() + "." + v.Patch.ToString());
+            List<VDR.ChannelGroup> groups = await vdr.GetChannelList();
+            Debug.WriteLine(groups.Count);
         }
     }
 }
