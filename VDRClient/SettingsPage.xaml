@@ -53,14 +53,15 @@
                 <TextBox Grid.Row="7" Grid.Column="0" x:Uid="SP_UserName_TextBox" Header="User name:" Text="{Binding Path=VDRSettings.UserName, Mode=TwoWay}" IsEnabled="{Binding Path=NewSettings}" Margin="10,5,10,5" />
                 <PasswordBox Grid.Row="8" Grid.Column="0" x:Uid="SP_Password_PasswordBox" Header="Password:" Password="{Binding Path=VDRSettings.Password, Mode=TwoWay}" IsEnabled="{Binding Path=NewSettings}" Margin="10,5,10,10" />
                 <Rectangle Grid.Row="9" Grid.Column="0" Fill="White" Height="2" Margin="10,10,10,10" />
-                <!--<ComboBox Grid.Row="10" Grid.Column="0" x:Uid="SP_Profile_ComboBox" Header="Streaming profile:" ItemsSource="{Binding Path=Profiles, Mode=OneWay}" SelectedItem="{Binding Path=VDRSettings.Profile, Mode=TwoWay}" IsEnabled="{Binding Path=NewSettings}" HorizontalAlignment="Stretch" Margin="10,10,10,10" />-->
                 <Grid Grid.Row="10" Grid.Column="0" Margin="10,10,10,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="100" />
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" x:Uid="SP_Profile_TextBox" Header="Streaming profile:" Text="{Binding Path=VDRSettings.Profile, Mode=TwoWay}" Margin="0,0,10,0" />
-                    <Button Grid.Column="1" x:Uid="SP_SearchProfiles_Button" Content="" FontFamily="Segoe MDL2 Assets" Width="100" Height="32" VerticalAlignment="Bottom" />
+                    <TextBox Grid.Column="0" x:Uid="SP_Profile_TextBox" Header="Streaming profile:" Text="{Binding Path=VDRSettings.Profile, Mode=TwoWay}" IsEnabled="{Binding Path=NewSettings}" />
+                    <ProgressRing Grid.Column="1" IsActive="{Binding Path=SearchingProfiles}" Visibility="Visible" Foreground="White" Width="50" VerticalAlignment="Bottom" Margin="0,0,0,5" />
+                    <Button Grid.Column="2" x:Uid="SP_SearchProfiles_Button" Content="" FontFamily="Segoe MDL2 Assets" Command="{Binding Path=SearchProfilesCommand}" IsEnabled="{Binding Path=NewSettings}" Width="100" Height="32" VerticalAlignment="Bottom" />
                 </Grid>
                 <Rectangle Grid.Row="11" Grid.Column="0" Fill="White" Height="2" Margin="10,10,10,10" />
                 <Button Grid.Row="12" Grid.Column="0" x:Uid="SP_Save_Button" Content="Save" Command="{Binding Path=SaveCommand}" IsEnabled="{Binding Path=NewSettings}" Width="100" HorizontalAlignment="Right"  Margin="10,10,10,10"/>

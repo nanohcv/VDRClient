@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,6 +26,10 @@ namespace VDRClient
         public MainPage()
         {
             this.InitializeComponent();
+            if(!VDR.Configuration.VDRs.Load())
+            {
+                this.mainFrame.Navigate(typeof(SettingsPage), this);
+            }
         }
 
         private void hamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -37,6 +42,13 @@ namespace VDRClient
             this.mainSplitView.IsPaneOpen = false;
             this.mainFrame.Navigate(typeof(SettingsPage), this);
             this.SettingsButton.IsChecked = false;
+        }
+
+        private void TVButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainSplitView.IsPaneOpen = false;
+            this.mainFrame.Navigate(typeof(TVPage), this);
+            this.TVButton.IsChecked = false;
         }
     }
 }
