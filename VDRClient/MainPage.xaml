@@ -46,9 +46,10 @@
         <SplitView Grid.Row="1" x:Name="mainSplitView" DisplayMode="CompactOverlay" >
             <SplitView.Pane>
                 <StackPanel>
+                    <RadioButton x:Name="SwitchButton" x:Uid="SplitViewSwitchButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Switch" Checked="SwitchButton_Checked" Visibility="{Binding Source={StaticResource Configuration}, Path=VDRs.SwitchButtonVisibility}" />
                     <RadioButton x:Name="TVButton" x:Uid="SplitViewTVButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="TV" Checked="TVButton_Checked" />
                     <!--<RadioButton x:Name="RecordingsButton" x:Uid="SplitViewRecordingsButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Aufnahmen" Checked="RecordingsButton_Checked" />-->
-                    <RadioButton x:Name="EPGButton" x:Uid="SplitViewEPGButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="EPG" />
+                    <RadioButton x:Name="EPGButton" x:Uid="SplitViewEPGButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="EPG" Checked="EPGButton_Checked" />
                     <!--<RadioButton x:Name="TimerListButton" x:Uid="SplitViewTimerButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Timer" Checked="TimerListButton_Checked" />-->
                     <!--<RadioButton x:Name="RemoteButton" x:Uid="SplitViewRemoteButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Remote" Checked="RemoteButton_Checked" />-->
                     <RadioButton x:Name="SettingsButton" x:Uid="SplitViewSettingsButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Settings" Checked="SettingsButton_Checked" />

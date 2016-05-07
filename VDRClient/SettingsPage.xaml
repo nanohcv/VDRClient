@@ -35,7 +35,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="auto" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Uid="SP_Add_Button" Content="+" Command="{Binding Path=AddCommand}" Width="100" />
+                    <Button Grid.Column="0" x:Uid="SP_Add_Button" Content="+" Command="{Binding Path=AddCommand}" IsEnabled="{Binding Path=EnableAddButton}" Width="100" />
                     <Button Grid.Column="2" x:Uid="SP_Remove_Button" Content="-" Command="{Binding Path=RemoveCommand}" Width="100" />
                 </Grid>
                 <Rectangle Grid.Row="2" Grid.Column="0" Fill="White" Height="2" Margin="10,10,10,10" />

@@ -1,0 +1,70 @@
+﻿<UserControl
+    x:Class="VDRClient.EPGListBoxItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VDRClient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <local:DeviceTypeAdaptiveTrigger PlatformType="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.Margin" Value="0,0,10,0" />
+                        <Setter Target="TitleTextBlock.(RelativePanel.Below)" Value="TimeTextBlock" />
+                        <Setter Target="TitleTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
+                        <Setter Target="ShortTextBlock.Margin" Value="0,0,10,0" />
+                        <Setter Target="ShortTextBlock.(RelativePanel.Below)" Value="TitleTextBlock" />
+                        <Setter Target="ShortTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
+                        <Setter Target="DescriptionTextBlock.Margin" Value="0,10,10,0" />
+                        <Setter Target="DescriptionTextBlock.(RelativePanel.Below)" Value="ShortTextBlock" />
+                        <Setter Target="DescriptionTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.Margin" Value="20,0,10,0" />
+                        <Setter Target="TitleTextBlock.(RelativePanel.RightOf)" Value="TimeTextBlock" />
+                        <Setter Target="TitleTextBlock.(RelativePanel.Below)" Value="{x:Null}" />
+                        <Setter Target="ShortTextBlock.Margin" Value="20,0,10,0" />
+                        <Setter Target="ShortTextBlock.(RelativePanel.Below)" Value="TitleTextBlock" />
+                        <Setter Target="ShortTextBlock.(RelativePanel.RightOf)" Value="TimeTextBlock" />
+                        <Setter Target="DescriptionTextBlock.Margin" Value="20,10,10,0" />
+                        <Setter Target="DescriptionTextBlock.(RelativePanel.Below)" Value="ShortTextBlock" />
+                        <Setter Target="DescriptionTextBlock.(RelativePanel.RightOf)" Value="TimeTextBlock" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="narrowView">
+                    <VisualState.Setters>
+                        <Setter Target="TitleTextBlock.Margin" Value="0,0,10,0" />
+                        <Setter Target="TitleTextBlock.(RelativePanel.Below)" Value="TimeTextBlock" />
+                        <Setter Target="TitleTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
+                        <Setter Target="ShortTextBlock.Margin" Value="0,0,10,0" />
+                        <Setter Target="ShortTextBlock.(RelativePanel.Below)" Value="TitleTextBlock" />
+                        <Setter Target="ShortTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
+                        <Setter Target="DescriptionTextBlock.Margin" Value="0,10,10,0" />
+                        <Setter Target="DescriptionTextBlock.(RelativePanel.Below)" Value="ShortTextBlock" />
+                        <Setter Target="DescriptionTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <RelativePanel>
+            <TextBlock x:Name="TimeTextBlock" FontWeight="Bold" Text="{Binding Path=TimeString}" />
+            <TextBlock x:Name="TitleTextBlock" FontWeight="Bold" Text="{Binding Path=Title}" Margin="20,0,10,0" TextWrapping="Wrap" RelativePanel.RightOf="TimeTextBlock" />
+            <TextBlock x:Name="ShortTextBlock" Text="{Binding Path=ShortText}" Margin="20,0,10,0" TextWrapping="Wrap" RelativePanel.Below="TitleTextBlock" RelativePanel.RightOf="TimeTextBlock" />
+            <TextBlock x:Name="DescriptionTextBlock" Text="{Binding Path=Description}" Margin="20,10,10,0" TextWrapping="Wrap" RelativePanel.Below="ShortTextBlock" RelativePanel.RightOf="TimeTextBlock" />
+        </RelativePanel>
+    </Grid>
+</UserControl>

@@ -25,12 +25,19 @@ namespace VDRClient.MVVM
             }
         }
 
+        private VDRList vdrs;
+
 
         public SettingsPageViewModel()
         {
             protocols = new List<string>();
             protocols.Add("http://");
             protocols.Add("https://");
+            vdrs = new VDRList();
+            foreach(Settings settings in Configuration.VDRs)
+            {
+                vdrs.Add(settings);
+            }
         }
 
         private List<string> protocols;
@@ -42,11 +49,17 @@ namespace VDRClient.MVVM
 
         public bool NewSettings { get; set; }
 
+        public bool EnableAddButton
+        {
+            get { return !NewSettings; }
+        }
+
         public VDRList VDRs
         {
             get
             {
-                return VDR.Configuration.VDRs;
+                //return VDR.Configuration.VDRs;
+                return vdrs;
             }
         }
 
@@ -57,13 +70,11 @@ namespace VDRClient.MVVM
             get { return vdrSettings; }
             set
             {
-                if (value != vdrSettings)
-                {
-                    vdrSettings = value;
-                    NewSettings = true;
-                    NotifyPropertyChanged("NewSettings");
-                    NotifyPropertyChanged("VDRSettings");
-                }
+                vdrSettings = value;
+                NewSettings = true;
+                NotifyPropertyChanged("NewSettings");
+                NotifyPropertyChanged("EnableAddButton");
+                NotifyPropertyChanged("VDRSettings");
             }
         }
 
@@ -88,7 +99,6 @@ namespace VDRClient.MVVM
             Settings s = new Settings();
             VDRs.Add(s);
             VDRSettings = s;
-            
         }
 
         private ICommand removeCommand;
@@ -109,7 +119,8 @@ namespace VDRClient.MVVM
 
         private void remove()
         {
-
+            VDRs.Remove(VDRSettings);
+            save();
         }
 
         private ICommand saveCommand;
@@ -128,13 +139,36 @@ namespace VDRClient.MVVM
             }
         }
 
-        private void save()
+        private async void save()
         {
+            if (vdrSettings != null)
+            {
+                if (vdrs.Count(x => x.Name == vdrSettings.Name) > 1)
+                {
+                    MessageDialog dlg = new MessageDialog("Es gibt bereits eine Einstellung mit dem Namen \"" + vdrSettings.Name + "\"");
+                    await dlg.ShowAsync();
+                    return;
+                }
+            }
             vdrSettings = null;
             NewSettings = false;
             NotifyPropertyChanged("NewSettings");
+            NotifyPropertyChanged("EnableAddButton");
             NotifyPropertyChanged("VDRSettings");
-            VDRs.Save();
+            Configuration.VDRs.Clear();
+            foreach(Settings settings in vdrs)
+            {
+                Configuration.VDRs.Add(settings);
+            }
+            if (Configuration.VDRs.Count > 0)
+            {
+                Configuration.VDRs.LastUsedSettings = Configuration.VDRs[Configuration.VDRs.Count - 1];
+            }
+            else
+            {
+                Configuration.VDRs.LastUsedSettings = null;
+            }
+            Configuration.VDRs.Save();
         }
 
         private ICommand searchProfilesCommand;
