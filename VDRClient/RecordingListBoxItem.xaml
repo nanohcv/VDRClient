@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="VDRClient.RecordingListBoxItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VDRClient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" x:Name="recNameTextBlock" FontSize="22" FontWeight="Bold" Text="{Binding Path=Name}" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="1" x:Name="durationTextBlock" FontWeight="Bold" Text="{Binding Path=FileInformation}" />
+        <TextBlock Grid.Row="2" x:Name="titleTextBlock" FontWeight="Bold" Text="{Binding Path=EPGTitle}" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="3" x:Name="shorttextTextBlock" Text="{Binding Path=EPGShortText}" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="4" x:Name="descriptionTextBlock" Text="{Binding Path=EPGDescription}" TextWrapping="Wrap" Margin="0,10,0,0" />
+    </Grid>
+</UserControl>

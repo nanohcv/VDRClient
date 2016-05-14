@@ -256,5 +256,155 @@ namespace VDRClient.VDR
             }
             return entry;
         }
+
+        public async Task<List<Recording>> GetRecordings(bool deleted = false)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string url = settings.BaseURL + "recordings.xml";
+            if (deleted)
+                url = settings.BaseURL + "deletedrecordings.xml";
+            List<Recording> recordings = new List<Recording>();
+            string xmlstring = await client.GetStringAsync(url);
+            var xml = XDocument.Parse(xmlstring);
+
+            foreach (XElement recordingElement in xml.Descendants("recording"))
+            {
+                string name = "";
+                if(recordingElement.Element("name") != null)
+                {
+                    name = recordingElement.Element("name").Value;
+                }
+                string filename = "";
+                if(recordingElement.Element("filename") != null)
+                {
+                    filename = recordingElement.Element("filename").Value;
+                }
+                string title = "";
+                if(recordingElement.Element("title") != null)
+                {
+                    title = recordingElement.Element("title").Value;
+                }
+                string inuse = "";
+                if(recordingElement.Element("inuse") != null)
+                {
+                    inuse = recordingElement.Element("inuse").Value;
+                }
+                string size = "";
+                if(recordingElement.Element("size") != null)
+                {
+                    size = recordingElement.Element("size").Value;
+                }
+                string duration = "";
+                if(recordingElement.Element("duration") != null)
+                {
+                    duration = recordingElement.Element("duration").Value;
+                }
+                string sdeleted = "";
+                if(recordingElement.Element("deleted") != null)
+                {
+                    sdeleted = recordingElement.Element("deleted").Value;
+                }
+                string channelid = "";
+                string channelname = "";
+                string epgtitle = "";
+                string epgshorttext = "";
+                string epgdescription = "";
+                if(recordingElement.Element("infos") != null)
+                {
+                    if(recordingElement.Element("infos").Element("channelid") != null)
+                    {
+                        channelid = recordingElement.Element("infos").Element("channelid").Value;
+                    }
+                    if(recordingElement.Element("infos").Element("channelname") != null)
+                    {
+                        channelname = recordingElement.Element("infos").Element("channelname").Value;
+                    }
+                    if(recordingElement.Element("infos").Element("title") != null)
+                    {
+                        epgtitle = recordingElement.Element("infos").Element("title").Value;
+                    }
+                    if(recordingElement.Element("infos").Element("shorttext") != null)
+                    {
+                        epgshorttext = recordingElement.Element("infos").Element("shorttext").Value;
+                    }
+                    if(recordingElement.Element("infos").Element("description") != null)
+                    {
+                        epgdescription = recordingElement.Element("infos").Element("description").Value;
+                    }
+                }
+                recordings.Add(new Recording(name, filename, title, inuse, size, duration, sdeleted, channelid, channelname, epgtitle, epgshorttext, epgdescription));
+            }
+            return recordings;
+        }
+
+        public async Task<bool> DeleteRecording(Recording recording)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string url = settings.BaseURL + "recordings.xml?filename=" + WebUtility.UrlEncode(recording.FileName) + "&action=delete";
+            string xmlstring = await client.GetStringAsync(url);
+            var xml = XDocument.Parse(xmlstring);
+            if(xml.Element("actions") != null)
+            {
+                if (xml.Element("actions").Element("delete") != null)
+                {
+                    string deleteresult = xml.Element("actions").Element("delete").Value;
+                    if (deleteresult == "true")
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> RemoveRecording(Recording recording)
+        {
+            if(recording.Deleted == DateTime.MinValue)
+            {
+                return false;
+            }
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string url = settings.BaseURL + "deletedrecordings.xml?filename=" + WebUtility.UrlEncode(recording.FileName) + "&action=remove";
+            string xmlstring = await client.GetStringAsync(url);
+            var xml = XDocument.Parse(xmlstring);
+            if (xml.Element("actions") != null)
+            {
+                if (xml.Element("actions").Element("remove") != null)
+                {
+                    string removeresult = xml.Element("actions").Element("remove").Value;
+                    if (removeresult == "true")
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> UndeleteRecording(Recording recording)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string url = settings.BaseURL + "deletedrecordings.xml?filename=" + WebUtility.UrlEncode(recording.FileName) + "&action=undelete";
+            if (recording.Deleted == DateTime.MinValue)
+                return false;
+            string xmlstring = await client.GetStringAsync(url);
+            var xml = XDocument.Parse(xmlstring);
+            if (xml.Element("actions") != null)
+            {
+                if(xml.Element("actions").Element("undelete") != null)
+                {
+                    string undeleteresult = xml.Element("actions").Element("undelete").Value;
+                    if (undeleteresult == "true")
+                        return true;
+                }
+            }
+            return false;
+        }
     }
 }

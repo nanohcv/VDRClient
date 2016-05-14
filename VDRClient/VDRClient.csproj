@@ -108,6 +108,7 @@
     <Compile Include="EPGPage.xaml.cs">
       <DependentUpon>EPGPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Global.cs" />
     <Compile Include="HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
@@ -116,12 +117,23 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\EPGPageViewModel.cs" />
+    <Compile Include="MVVM\RecordingsPageViewModel.cs" />
     <Compile Include="MVVM\SettingsPageViewModel.cs" />
     <Compile Include="MVVM\TVPageViewModel.cs" />
+    <Compile Include="MVVM\ViewRecordingPageViewModel.cs" />
     <Compile Include="ProfilesContentDialog.xaml.cs">
       <DependentUpon>ProfilesContentDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecordingContentDialog.xaml.cs">
+      <DependentUpon>RecordingContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RecordingListBoxItem.xaml.cs">
+      <DependentUpon>RecordingListBoxItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RecordingsPage.xaml.cs">
+      <DependentUpon>RecordingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RelayCommand.cs" />
     <Compile Include="SettingsContentDialog.xaml.cs">
       <DependentUpon>SettingsContentDialog.xaml</DependentUpon>
@@ -136,10 +148,14 @@
     <Compile Include="VDR\ChannelGroup.cs" />
     <Compile Include="VDR\Configuration.cs" />
     <Compile Include="VDR\EPGEntry.cs" />
+    <Compile Include="VDR\Recording.cs" />
     <Compile Include="VDR\Settings.cs" />
     <Compile Include="VDR\VDR.cs" />
     <Compile Include="VDR\VDRList.cs" />
     <Compile Include="VDR\XmlApiVersion.cs" />
+    <Compile Include="ViewRecordingPage.xaml.cs">
+      <DependentUpon>ViewRecordingPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -191,6 +207,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="RecordingContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecordingListBoxItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecordingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SettingsContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -204,6 +232,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="TVPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewRecordingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -195,4 +195,55 @@
   <data name="SettingNameAlreadyUsed" xml:space="preserve">
     <value>There is already a setting named</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeletedRecordings" xml:space="preserve">
+    <value>Deleted recordings</value>
+  </data>
+  <data name="EPGPage_DescrCheckBox.Content" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="EPGPage_InfoCheckBox.Content" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="EPGPage_SearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="EPGPage_SearchResultTextBlock.Text" xml:space="preserve">
+    <value>Search result</value>
+  </data>
+  <data name="EPGPage_TitleCheckBox.Content" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="RecordingContentDialog.PrimaryButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="RecordingContentDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RecordingContentDialog.Title" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Recordings" xml:space="preserve">
+    <value>Recordings</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove from disk</value>
+  </data>
+  <data name="Undelete" xml:space="preserve">
+    <value>Undelete</value>
+  </data>
+  <data name="Watch" xml:space="preserve">
+    <value>Watch</value>
+  </data>
+  <data name="minute" xml:space="preserve">
+    <value>Minute</value>
+  </data>
+  <data name="minutes" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="seconds" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
 </root>

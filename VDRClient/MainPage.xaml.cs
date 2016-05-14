@@ -23,9 +23,11 @@ namespace VDRClient
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
         public MainPage()
         {
             this.InitializeComponent();
+            Global.MainPage = this;
             if(!VDR.Configuration.VDRs.Load())
             {
                 this.mainFrame.Navigate(typeof(SettingsPage), this);
@@ -121,6 +123,13 @@ namespace VDRClient
             this.mainSplitView.IsPaneOpen = false;
             this.mainFrame.Navigate(typeof(HelpPage), this);
             this.HelpButton.IsChecked = false;
+        }
+
+        private void RecordingsButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainSplitView.IsPaneOpen = false;
+            this.mainFrame.Navigate(typeof(RecordingsPage), this);
+            this.RecordingsButton.IsChecked = false;
         }
     }
 }
