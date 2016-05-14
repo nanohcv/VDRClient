@@ -102,6 +102,11 @@ namespace VDRClient.VDR
                 return false;
         }
 
+        public override string ToString()
+        {
+            return Major.ToString() + "." + Minor.ToString() + "." + Patch.ToString();
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)

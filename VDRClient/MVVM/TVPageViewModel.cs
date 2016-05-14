@@ -216,7 +216,16 @@ namespace VDRClient.MVVM
             {
                 CurrentEPG = await vdr.GetCurrentEPGEntry(CurrentEPG.ChannelID);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                if(ex.InnerException != null)
+                {
+                    msg += "\r\n" + ex.InnerException.Message;
+                }
+                LogWriter.WriteToLog(msg);
+                LogWriter.WriteLogToFile();
+            }
         }
 
         private async void SetChannelList()
@@ -225,7 +234,16 @@ namespace VDRClient.MVVM
             {
                 ChannelList = await vdr.GetChannelList();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg += "\r\n" + ex.InnerException.Message;
+                }
+                LogWriter.WriteToLog(msg);
+                LogWriter.WriteLogToFile();
+            }
         }
 
         private async void UpdateEPG(List<VDR.Channel> channels)
@@ -240,7 +258,16 @@ namespace VDRClient.MVVM
                         channel.EPGTitle = entry.Title;
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    string msg = ex.Message;
+                    if (ex.InnerException != null)
+                    {
+                        msg += "\r\n" + ex.InnerException.Message;
+                    }
+                    LogWriter.WriteToLog(msg);
+                    LogWriter.WriteLogToFile();
+                }
             }
         }
 
@@ -250,7 +277,16 @@ namespace VDRClient.MVVM
             {
                 CurrentEPG = await vdr.GetCurrentEPGEntry(channelid);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg += "\r\n" + ex.InnerException.Message;
+                }
+                LogWriter.WriteToLog(msg);
+                LogWriter.WriteLogToFile();
+            }
             MediaSource = new Uri(settings.BaseURL + "stream.ts?chid=" + channelid + "&preset=" + settings.Profile);
             SelectedChannel = null;
             if(this.HandleMobileView != null)

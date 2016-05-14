@@ -68,7 +68,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Text="{Binding Path=CurrentEPG.Title}" FontSize="25" FontWeight="Bold" TextWrapping="Wrap" />
-                <TextBlock Grid.Row="1" Text="{Binding Path=CurrentEPG.TimeString}" FontSize="20" TextWrapping="Wrap" />
+                <TextBlock Grid.Row="1" Text="{Binding Path=CurrentEPG.TimeStringLong}" FontSize="20" TextWrapping="Wrap" />
                 <TextBlock Grid.Row="2" Text="{Binding Path=CurrentEPG.ShortText}" FontSize="20" TextWrapping="Wrap" />
                 <TextBlock Grid.Row="3" Text="{Binding Path=CurrentEPG.Description}" Margin="0,20,0,0" FontSize="16" TextWrapping="Wrap" />
             </Grid>

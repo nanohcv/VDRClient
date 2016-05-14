@@ -9,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -55,8 +56,39 @@ namespace VDRClient
             inputPane = InputPane.GetForCurrentView();
             inputPane.Showing += InputPane_Showing;
             inputPane.Hiding += InputPane_Hiding;
+            SetViewModel();
+        }
+
+        private async void SetViewModel()
+        {
             if (VDR.Configuration.VDRs.LastUsedSettings != null)
             {
+                VDR.VDR vdr = new VDR.VDR(VDR.Configuration.VDRs.LastUsedSettings);
+                VDR.XmlApiVersion xmlapiversion = null;
+                try
+                {
+                    xmlapiversion = await vdr.GetXMLAPIVersion();
+                }
+                catch(Exception ex)
+                {
+                    string msg = ex.Message;
+                    if(ex.InnerException != null)
+                    {
+                        msg += "\r\n" + ex.InnerException.Message;
+                    }
+                    LogWriter.WriteToLog(msg);
+                    LogWriter.WriteLogToFile();
+                    MessageDialog dlg = new MessageDialog(msg);
+                    await dlg.ShowAsync();
+                    return;
+
+                }
+                if(xmlapiversion < VDR.Configuration.MinXmlApiVersion)
+                {
+                    MessageDialog dlg = new MessageDialog("Your XMLAPI Plugin is too old for this App!\r\nYour XMLAPI version = " + xmlapiversion.ToString() + "\r\nRequired version = " + VDR.Configuration.MinXmlApiVersion.ToString());
+                    await dlg.ShowAsync();
+                    return;
+                }
                 ViewModel = new MVVM.TVPageViewModel(VDR.Configuration.VDRs.LastUsedSettings);
                 ViewModel.HandleMobileView = HandleMobileView;
             }

@@ -10,61 +10,51 @@
     <Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="Mobile">
-                    <VisualState.StateTriggers>
-                        <local:DeviceTypeAdaptiveTrigger PlatformType="Mobile" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="TitleTextBlock.Margin" Value="0,0,10,0" />
-                        <Setter Target="TitleTextBlock.(RelativePanel.Below)" Value="TimeTextBlock" />
-                        <Setter Target="TitleTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
-                        <Setter Target="ShortTextBlock.Margin" Value="0,0,10,0" />
-                        <Setter Target="ShortTextBlock.(RelativePanel.Below)" Value="TitleTextBlock" />
-                        <Setter Target="ShortTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
-                        <Setter Target="DescriptionTextBlock.Margin" Value="0,10,10,0" />
-                        <Setter Target="DescriptionTextBlock.(RelativePanel.Below)" Value="ShortTextBlock" />
-                        <Setter Target="DescriptionTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
-                    </VisualState.Setters>
-                </VisualState>
                 <VisualState x:Name="wideView">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="col1.Width" Value="150" />
+                        <Setter Target="col2.Width" Value="*" />
+                        <Setter Target="TitleTextBlock.(Grid.Row)" Value="0" />
+                        <Setter Target="TitleTextBlock.(Grid.Column)" Value="1" />
                         <Setter Target="TitleTextBlock.Margin" Value="20,0,10,0" />
-                        <Setter Target="TitleTextBlock.(RelativePanel.RightOf)" Value="TimeTextBlock" />
-                        <Setter Target="TitleTextBlock.(RelativePanel.Below)" Value="{x:Null}" />
+                        <Setter Target="ShortTextBlock.(Grid.Row)" Value="1" />
+                        <Setter Target="ShortTextBlock.(Grid.Column)" Value="1" />
                         <Setter Target="ShortTextBlock.Margin" Value="20,0,10,0" />
-                        <Setter Target="ShortTextBlock.(RelativePanel.Below)" Value="TitleTextBlock" />
-                        <Setter Target="ShortTextBlock.(RelativePanel.RightOf)" Value="TimeTextBlock" />
+                        <Setter Target="DescriptionTextBlock.(Grid.Row)" Value="2" />
+                        <Setter Target="DescriptionTextBlock.(Grid.Column)" Value="1" />
+                        <Setter Target="DescriptionTextBlock.(Grid.RowSpan)" Value="3" />
                         <Setter Target="DescriptionTextBlock.Margin" Value="20,10,10,0" />
-                        <Setter Target="DescriptionTextBlock.(RelativePanel.Below)" Value="ShortTextBlock" />
-                        <Setter Target="DescriptionTextBlock.(RelativePanel.RightOf)" Value="TimeTextBlock" />
                     </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="narrowView">
-                    <VisualState.Setters>
-                        <Setter Target="TitleTextBlock.Margin" Value="0,0,10,0" />
-                        <Setter Target="TitleTextBlock.(RelativePanel.Below)" Value="TimeTextBlock" />
-                        <Setter Target="TitleTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
-                        <Setter Target="ShortTextBlock.Margin" Value="0,0,10,0" />
-                        <Setter Target="ShortTextBlock.(RelativePanel.Below)" Value="TitleTextBlock" />
-                        <Setter Target="ShortTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
-                        <Setter Target="DescriptionTextBlock.Margin" Value="0,10,10,0" />
-                        <Setter Target="DescriptionTextBlock.(RelativePanel.Below)" Value="ShortTextBlock" />
-                        <Setter Target="DescriptionTextBlock.(RelativePanel.RightOf)" Value="{x:Null}" />
-                    </VisualState.Setters>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-        <RelativePanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="col1" Width="*" />
+                <ColumnDefinition x:Name="col2" Width="0" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" x:Name="TimeTextBlock" FontWeight="Bold" Text="{Binding Path=TimeString}" TextWrapping="Wrap" />
+            <TextBlock Grid.Row="1" Grid.Column="0" x:Name="ChannelNameTextBlock" FontWeight="Bold" Text="{Binding Path=ChannelName}" />
+            <TextBlock Grid.Row="2" Grid.Column="0" x:Name="TitleTextBlock" FontWeight="Bold" Text="{Binding Path=Title}" Margin="0,0,10,0" TextWrapping="Wrap" />
+            <TextBlock Grid.Row="3" Grid.Column="0" x:Name="ShortTextBlock" Text="{Binding Path=ShortText}" Margin="0,0,10,0" TextWrapping="Wrap" />
+            <TextBlock Grid.Row="4" Grid.Column="0" x:Name="DescriptionTextBlock" Text="{Binding Path=Description}" Margin="0,10,10,0" TextWrapping="Wrap" />
+        </Grid>
+        <!--<RelativePanel>
             <TextBlock x:Name="TimeTextBlock" FontWeight="Bold" Text="{Binding Path=TimeString}" />
+            <TextBlock x:Name="ChannelNameTextBlock" FontWeight="Bold" Text="{Binding Path=ChannelName}" RelativePanel.Below="TimeTextBlock" />
             <TextBlock x:Name="TitleTextBlock" FontWeight="Bold" Text="{Binding Path=Title}" Margin="20,0,10,0" TextWrapping="Wrap" RelativePanel.RightOf="TimeTextBlock" />
             <TextBlock x:Name="ShortTextBlock" Text="{Binding Path=ShortText}" Margin="20,0,10,0" TextWrapping="Wrap" RelativePanel.Below="TitleTextBlock" RelativePanel.RightOf="TimeTextBlock" />
             <TextBlock x:Name="DescriptionTextBlock" Text="{Binding Path=Description}" Margin="20,10,10,0" TextWrapping="Wrap" RelativePanel.Below="ShortTextBlock" RelativePanel.RightOf="TimeTextBlock" />
-        </RelativePanel>
+        </RelativePanel>-->
     </Grid>
 </UserControl>

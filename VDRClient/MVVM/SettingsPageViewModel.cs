@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VDRClient.VDR;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
@@ -26,7 +27,7 @@ namespace VDRClient.MVVM
         }
 
         private VDRList vdrs;
-
+        private ResourceLoader resourceLoader = ResourceLoader.GetForViewIndependentUse("Resources");
 
         public SettingsPageViewModel()
         {
@@ -145,7 +146,7 @@ namespace VDRClient.MVVM
             {
                 if (vdrs.Count(x => x.Name == vdrSettings.Name) > 1)
                 {
-                    MessageDialog dlg = new MessageDialog("Es gibt bereits eine Einstellung mit dem Namen \"" + vdrSettings.Name + "\"");
+                    MessageDialog dlg = new MessageDialog(resourceLoader.GetString("SettingNameAlreadyUsed") + " \"" + vdrSettings.Name + "\"");
                     await dlg.ShowAsync();
                     return;
                 }
@@ -205,7 +206,14 @@ namespace VDRClient.MVVM
             {
                 SearchingProfiles = false;
                 NotifyPropertyChanged("SearchingProfiles");
-                MessageDialog errdlg = new MessageDialog(ex.Message);
+                string msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg += "\r\n" + ex.InnerException.Message;
+                }
+                LogWriter.WriteToLog(msg);
+                LogWriter.WriteLogToFile();
+                MessageDialog errdlg = new MessageDialog(msg);
                 await errdlg.ShowAsync();
                 return;
             }

@@ -29,10 +29,26 @@ namespace VDRClient
             if(!VDR.Configuration.VDRs.Load())
             {
                 this.mainFrame.Navigate(typeof(SettingsPage), this);
+                LogWriter.WriteToLog("VDR Client started...");
+                LogWriter.WriteToLog("Could not load configurations. First start? -> Open settings page");
+                LogWriter.WriteLogToFile();
             }
             else
             {
-                this.mainFrame.Navigate(typeof(TVPage), this);
+                LogWriter.WriteToLog("VDR Client started...");
+                foreach (VDR.Settings setting in VDR.Configuration.VDRs)
+                {
+                    string s = "Found Configuration: " + setting.Name + "\r\n";
+                    s += "\tAddress: " + setting.Address + "\r\n";
+                    s += "\tPort: " + setting.Port + "\r\n";
+                    s += "\tProtocol: " + setting.Protocol + "\r\n";
+                    s += "\tUser: " + setting.UserName + "\r\n";
+                    s += "\tPasswort: ******\r\n";
+                    s += "\tProfile: " + setting.Profile;
+                    LogWriter.WriteToLog(s);
+                }
+                LogWriter.WriteLogToFile();
+                this.mainFrame.Navigate(typeof(TVPage), this);       
             }
         }
 
@@ -98,6 +114,13 @@ namespace VDRClient
             this.mainSplitView.IsPaneOpen = false;
             this.mainFrame.Navigate(typeof(EPGPage), this);
             this.EPGButton.IsChecked = false;
+        }
+
+        private void HelpButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainSplitView.IsPaneOpen = false;
+            this.mainFrame.Navigate(typeof(HelpPage), this);
+            this.HelpButton.IsChecked = false;
         }
     }
 }

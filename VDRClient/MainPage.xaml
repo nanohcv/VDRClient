@@ -53,7 +53,7 @@
                     <!--<RadioButton x:Name="TimerListButton" x:Uid="SplitViewTimerButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Timer" Checked="TimerListButton_Checked" />-->
                     <!--<RadioButton x:Name="RemoteButton" x:Uid="SplitViewRemoteButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Remote" Checked="RemoteButton_Checked" />-->
                     <RadioButton x:Name="SettingsButton" x:Uid="SplitViewSettingsButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Settings" Checked="SettingsButton_Checked" />
-                    <RadioButton x:Name="HelpButton" x:Uid="SplitViewHelpButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Help" />
+                    <RadioButton x:Name="HelpButton" x:Uid="SplitViewHelpButton" Style="{StaticResource NavRadioButtonStyle}" Tag="" Content="Help" Checked="HelpButton_Checked" />
                 </StackPanel>
             </SplitView.Pane>
             <SplitView.Content>

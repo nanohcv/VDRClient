@@ -10,6 +10,7 @@ namespace VDRClient.VDR
     {
         public string EventID { get; private set; }
         public string ChannelID { get; private set; }
+        public string ChannelName { get; set; }
         public string Title { get; private set; }
         public string ShortText { get; private set; }
         public string Description { get; private set; }
@@ -17,6 +18,7 @@ namespace VDRClient.VDR
         public DateTime Stop { get; private set; }
         public int Duration { get; private set; }
 
+        public string TimeStringLong { get; private set; }
         public string TimeString { get; private set; }
 
         public EPGEntry(string eventid, string channelid, string title, string shorttext, string description, string start, string stop, string duration)
@@ -35,7 +37,8 @@ namespace VDRClient.VDR
                 Duration = Convert.ToInt32(duration);
             }
             catch { }
-            TimeString = Start.ToString("ddd HH:mm") + "  -  " + Stop.ToString("HH:mm");
+            TimeStringLong = Start.ToString("ddd dd.MM.yyyy  HH:mm") + " - " + Stop.ToString("HH:mm");
+            TimeString = Start.ToString("ddd dd.MM.yyyy") + "\r\n" + Start.ToString("HH:mm") + " - " + Stop.ToString("HH:mm");
         }
 
     }

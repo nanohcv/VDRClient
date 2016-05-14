@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace VDRClient.MVVM
 {
@@ -63,12 +65,94 @@ namespace VDRClient.MVVM
             }
         }
 
+        private Visibility epgpageVisible;
+        public Visibility EPGPageVisible
+        {
+            get { return epgpageVisible; }
+            set
+            {
+                epgpageVisible = value;
+                if (epgpageVisible == Visibility.Visible)
+                    searchResultVisible = Visibility.Collapsed;
+                else
+                    searchResultVisible = Visibility.Visible;
+                NotifyPropertyChanged("EPGPageVisible");
+                NotifyPropertyChanged("SearchResultVisible");
+            }
+        }
+
+        private Visibility searchResultVisible;
+        public Visibility SearchResultVisible
+        {
+            get { return searchResultVisible; }
+            set
+            {
+                searchResultVisible = value;
+                if (searchResultVisible == Visibility.Visible)
+                    epgpageVisible = Visibility.Collapsed;
+                else
+                    epgpageVisible = Visibility.Visible;
+                NotifyPropertyChanged("SearchResultVisible");
+                NotifyPropertyChanged("EPGPageVisible");
+            }
+        }
+
+        public bool SearchTitle { get; set; }
+        public bool SearchInfo { get; set; }
+        public bool SearchDescr { get; set; }
+
+        public string SearchText { get; set; }
+        private List<VDR.EPGEntry> searchResult;
+        public List<VDR.EPGEntry> SearchResult
+        {
+            get { return searchResult; }
+            set
+            {
+                searchResult = value;
+                NotifyPropertyChanged("SearchResult");
+            }
+        }
+        public async void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if(SearchText != null && SearchText != "")
+            {
+                List<VDR.EPGEntry> entries = null;
+                try
+                {
+                    entries = await vdr.SearchEPG(null, SearchText, SearchTitle, SearchInfo, SearchDescr);
+                }
+                catch (Exception ex)
+                {
+                    string msg = ex.Message;
+                    if (ex.InnerException != null)
+                    {
+                        msg += "\r\n" + ex.InnerException.Message;
+                    }
+                    LogWriter.WriteToLog(msg);
+                    LogWriter.WriteLogToFile();
+                    return;
+                }
+                for(int i = 0; i<entries.Count; i++)
+                {
+                    VDR.Channel ch = (from chgroup in ChannelList
+                                      from channel in chgroup
+                                      where channel.ChannelID == entries[i].ChannelID
+                                      select channel).FirstOrDefault();
+                    entries[i].ChannelName = ch.Name;
+                }
+                SearchResult = entries.Where(x => x.Stop > DateTime.Now).ToList().OrderBy(x => x.Start).ToList();
+                SearchResultVisible = Visibility.Visible;
+            }
+        }
+
         private VDR.Settings settings;
         private VDR.VDR vdr;
         public EPGPageViewModel(VDR.Settings settings)
         {
             this.settings = settings;
             this.vdr = new VDR.VDR(this.settings);
+            EPGPageVisible = Visibility.Visible;
+            SearchTitle = true;
             SetChannelList();
         }
 
@@ -79,16 +163,43 @@ namespace VDRClient.MVVM
                 ChannelList = await vdr.GetChannelList();
                 SelectedGroup = ChannelList[0];
             }
-            catch { }
+            catch(Exception ex)
+            {
+                string msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg += "\r\n" + ex.InnerException.Message;
+                }
+                LogWriter.WriteToLog(msg);
+                LogWriter.WriteLogToFile();
+            }
         }
 
         private async void GetEpgEntries(VDR.Channel channel)
         {
             try
             {
-                CurrentEPGEntries = await vdr.GetEPGEntries(channel.ChannelID);
+                List<VDR.EPGEntry> entries = await vdr.GetEPGEntries(channel.ChannelID);
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    VDR.Channel ch = (from chgroup in ChannelList
+                                      from chname in chgroup
+                                      where chname.ChannelID == entries[i].ChannelID
+                                      select chname).FirstOrDefault();
+                    entries[i].ChannelName = ch.Name;
+                }
+                CurrentEPGEntries = entries.Where(x => x.Stop > DateTime.Now).ToList();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                string msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg += "\r\n" + ex.InnerException.Message;
+                }
+                LogWriter.WriteToLog(msg);
+                LogWriter.WriteLogToFile();
+            }
         }
     }
 }

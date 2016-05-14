@@ -85,6 +85,68 @@ namespace VDRClient.VDR
             return groups;
         }
 
+        public async Task<List<EPGEntry>> SearchEPG(string channelid, string search, bool stitle=true, bool sshorttext=false, bool sdescription=false)
+        {
+            string options = "";
+            if (stitle)
+                options += "T";
+            if (sshorttext)
+                options += "S";
+            if (sdescription)
+                options += "D";
+            string url = settings.BaseURL + "epg.xml?search=" + search + "&options=" + options;
+            if (channelid != null && channelid != "")
+                url += "&chid=" + channelid;
+
+            List<EPGEntry> epgentries = new List<EPGEntry>();
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string xmlstring = await client.GetStringAsync(url);
+            var xml = XDocument.Parse(xmlstring);
+            foreach (XElement eventElement in xml.Descendants("event"))
+            {
+                string eventid = eventElement.Attribute("id").Value;
+                string chid = "";
+                if (eventElement.Element("channelid") != null)
+                {
+                    chid = eventElement.Element("channelid").Value;
+                }
+                string title = "";
+                if (eventElement.Element("title") != null)
+                {
+                    title = eventElement.Element("title").Value;
+                }
+                string shorttext = "";
+                if (eventElement.Element("shorttext") != null)
+                {
+                    shorttext = eventElement.Element("shorttext").Value;
+                }
+                string description = "";
+                if (eventElement.Element("description") != null)
+                {
+                    description = eventElement.Element("description").Value;
+                }
+                string start = "";
+                if (eventElement.Element("start") != null)
+                {
+                    start = eventElement.Element("start").Value;
+                }
+                string stop = "";
+                if (eventElement.Element("stop") != null)
+                {
+                    stop = eventElement.Element("stop").Value;
+                }
+                string duration = "";
+                if (eventElement.Element("duration") != null)
+                {
+                    duration = eventElement.Element("duration").Value;
+                }
+                epgentries.Add(new EPGEntry(eventid, chid, title, shorttext, description, start, stop, duration));
+            }
+            return epgentries;
+        }
+
         public async Task<List<EPGEntry>> GetEPGEntries(string channelid)
         {
             List<EPGEntry> epgentries = new List<EPGEntry>();
