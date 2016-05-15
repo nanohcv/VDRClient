@@ -13,7 +13,15 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" x:Name="RecordingsTitleGrid" Visibility="{Binding Path=SearchResultVisible, Mode=OneWay}">
+        <Grid Grid.Row="0" x:Name="SearchResultTitleGrid" Visibility="{Binding Path=SearchResultVisible, Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" x:Name="SearchResultTextBlock" x:Uid="RecordingsPage_SearchResultTextBlock" Text="Search result" FontSize="25" FontWeight="Bold" Margin="10,10,10,0" />
+            <Rectangle Grid.Row="1" Height="2" Fill="White" Margin="10,10,10,10" />
+        </Grid>
+        <Grid Grid.Row="0" x:Name="RecordingsTitleGrid" Visibility="{Binding Path=RecordingsVisible, Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -33,5 +41,14 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Grid Grid.Row="2" Visibility="{Binding Path=RecordingsVisible, Mode=OneWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="500" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <AutoSuggestBox Grid.Row="0" Grid.Column="0" x:Name="searchBox" x:Uid="RecordingsPage_SearchBox" PlaceholderText="Search" QueryIcon="Find" Text="{Binding Path=SearchText, Mode=TwoWay}" QuerySubmitted="{x:Bind Path=ViewModel.SearchBox_QuerySubmitted}" HorizontalAlignment="Stretch" Margin="10,10,10,10" />
+        </Grid>
     </Grid>
 </Page>

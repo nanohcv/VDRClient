@@ -102,10 +102,18 @@ namespace VDRClient
 
         private void RecordingsPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            if (base.Frame.CanGoBack)
+            if(ViewModel.SearchResultVisible == Visibility.Visible)
             {
-                e.Handled = true;
-                base.Frame.GoBack();
+                ViewModel.RecordingsVisible = Visibility.Visible;
+                ViewModel.SetRecordings(ViewModel.SelectedRecordingList.DeletedRecordings);
+            }
+            else
+            {
+                if (base.Frame.CanGoBack)
+                {
+                    e.Handled = true;
+                    base.Frame.GoBack();
+                }
             }
         }
 

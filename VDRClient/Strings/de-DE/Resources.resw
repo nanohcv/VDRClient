@@ -246,4 +246,13 @@
   <data name="seconds" xml:space="preserve">
     <value>Sekunden</value>
   </data>
+  <data name="RecordingsPage_SearchBox.PlaceholderText" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="RecordingsPage_SearchResultTextBlock.Text" xml:space="preserve">
+    <value>Suchergebnis</value>
+  </data>
+  <data name="SplitViewRecordingsButton.Content" xml:space="preserve">
+    <value>Aufnahmen</value>
+  </data>
 </root>

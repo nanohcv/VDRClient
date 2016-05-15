@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace VDRClient.MVVM
@@ -96,6 +97,49 @@ namespace VDRClient.MVVM
             }
         }
 
+        private Visibility recordingsVisible;
+        public Visibility RecordingsVisible
+        {
+            get { return recordingsVisible; }
+            set
+            {
+                recordingsVisible = value;
+                if (recordingsVisible == Visibility.Visible)
+                    searchResultVisible = Visibility.Collapsed;
+                else
+                    searchResultVisible = Visibility.Visible;
+                NotifyPropertyChanged("RecordingsVisible");
+                NotifyPropertyChanged("SearchResultVisible");
+            }
+        }
+
+        private Visibility searchResultVisible;
+        public Visibility SearchResultVisible
+        {
+            get { return searchResultVisible; }
+            set
+            {
+                searchResultVisible = value;
+                if (searchResultVisible == Visibility.Visible)
+                    recordingsVisible = Visibility.Collapsed;
+                else
+                    recordingsVisible = Visibility.Visible;
+                NotifyPropertyChanged("SearchResultVisible");
+                NotifyPropertyChanged("RecordingsVisible");
+            }
+        }
+
+        private string searchText;
+        public string SearchText
+        {
+            get { return searchText; }
+            set
+            {
+                searchText = value;
+                NotifyPropertyChanged("SearchText");
+            }
+        }
+
         public delegate void ViewRecordingDelegate(VDR.Recording rec);
         public ViewRecordingDelegate ViewRecording;
 
@@ -110,15 +154,16 @@ namespace VDRClient.MVVM
             rlist.Add(new RecordingListItem { Name = resourceLoader.GetString("DeletedRecordings"), DeletedRecordings = true });
             RecordingList = rlist;
             SelectedRecordingList = RecordingList[0];
+            RecordingsVisible = Visibility.Visible;
         }
 
-        private async void SetRecordings(bool del)
+        public async void SetRecordings(bool del)
         {
             try
             {
                 Recordings = await vdr.GetRecordings(del);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string msg = ex.Message;
                 if (ex.InnerException != null)
@@ -136,7 +181,7 @@ namespace VDRClient.MVVM
             {
                 RecordingContentDialog dlg = new RecordingContentDialog(SelectedRecordingList.DeletedRecordings);
                 ContentDialogResult result = await dlg.ShowAsync();
-                if(result == ContentDialogResult.Primary)
+                if (result == ContentDialogResult.Primary)
                 {
                     RecordingContentDialog.RecordingAction action = dlg.SelectedAction;
                     if (action == RecordingContentDialog.RecordingAction.delete)
@@ -178,14 +223,14 @@ namespace VDRClient.MVVM
                         Debug.WriteLine("Removed = " + removed.ToString());
 
                     }
-                    else if(action == RecordingContentDialog.RecordingAction.undelete)
+                    else if (action == RecordingContentDialog.RecordingAction.undelete)
                     {
                         bool undeleted = false;
                         try
                         {
                             undeleted = await vdr.UndeleteRecording(SelectedRecording);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             string msg = ex.Message;
                             if (ex.InnerException != null)
@@ -197,9 +242,9 @@ namespace VDRClient.MVVM
                         }
                         Debug.WriteLine("Undeleted = " + undeleted.ToString());
                     }
-                    else if(action == RecordingContentDialog.RecordingAction.watch)
+                    else if (action == RecordingContentDialog.RecordingAction.watch)
                     {
-                        if(ViewRecording != null)
+                        if (ViewRecording != null)
                         {
                             ViewRecording(SelectedRecording);
                         }
@@ -210,5 +255,13 @@ namespace VDRClient.MVVM
             }
         }
 
+        public void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            Recordings = Recordings.Where(x => x.Name.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) != -1 ||
+                                               x.EPGTitle.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) != -1 ||
+                                               x.EPGShortText.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) != -1 ||
+                                               x.EPGDescription.IndexOf(SearchText, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+            SearchResultVisible = Visibility.Visible;
+        }
     }
 }
