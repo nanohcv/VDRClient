@@ -8,7 +8,7 @@ namespace VDRClient.VDR
 {
     public class Configuration
     {
-        public static XmlApiVersion MinXmlApiVersion = new XmlApiVersion("1.2.0");
+        public static XmlApiVersion MinXmlApiVersion = new XmlApiVersion("1.3.0");
 
         private static VDRList vdrs = new VDRList();
 

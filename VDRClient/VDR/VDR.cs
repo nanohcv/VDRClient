@@ -63,6 +63,13 @@ namespace VDRClient.VDR
                 foreach (XElement channelElement in groupElement.Descendants("channel"))
                 {
                     string channelid = channelElement.Attribute("id").Value;
+                    bool isradio = false;
+                    if(channelElement.Element("isradio") != null)
+                    {
+                        string ir = channelElement.Element("isradio").Value;
+                        if (ir == "true")
+                            isradio = true;
+                    }
                     string channelname = "";
                     if (channelElement.Element("name") != null)
                     {
@@ -78,7 +85,7 @@ namespace VDRClient.VDR
                     {
                         logo = channelElement.Element("logo").Value;
                     }
-                    channelgroup.Add(new Channel(channelid, channelname, shortname, logo));
+                    channelgroup.Add(new Channel(channelid, isradio, channelname, shortname, logo));
                 }
                 groups.Add(channelgroup);
             }
@@ -403,6 +410,141 @@ namespace VDRClient.VDR
                     if (undeleteresult == "true")
                         return true;
                 }
+            }
+            return false;
+        }
+
+        public async Task<List<Timer>> GetTimers()
+        {
+            List<Timer> timers = new List<Timer>();
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string xmlstring = await client.GetStringAsync(settings.BaseURL + "timers.xml");
+            var xml = XDocument.Parse(xmlstring);
+            foreach (XElement timerElement in xml.Descendants("timer"))
+            {
+                string tid = timerElement.Attribute("id").Value;
+                string chid = "";
+                if (timerElement.Element("channelid") != null)
+                {
+                    chid = timerElement.Element("channelid").Value;
+                }
+                string chname = "";
+                if (timerElement.Element("channelname") != null)
+                {
+                    chname = timerElement.Element("channelname").Value;
+                }
+                string name = "";
+                if (timerElement.Element("name") != null)
+                {
+                    name = timerElement.Element("name").Value;
+                }
+                string aux = "";
+                if (timerElement.Element("aux") != null)
+                {
+                    aux = timerElement.Element("aux").Value;
+                }
+                string sflags = "";
+                if (timerElement.Element("flags") != null)
+                {
+                    sflags = timerElement.Element("flags").Value;
+                }
+                string swdays = "";
+                if (timerElement.Element("weekdays") != null)
+                {
+                    swdays = timerElement.Element("weekdays").Value;
+                }
+                string sday = "";
+                if (timerElement.Element("day") != null)
+                {
+                    sday = timerElement.Element("day").Value;
+                }
+                string sstart = "";
+                if (timerElement.Element("start") != null)
+                {
+                    sstart = timerElement.Element("start").Value;
+                }
+                string sstop = "";
+                if (timerElement.Element("stop") != null)
+                {
+                    sstop = timerElement.Element("stop").Value;
+                }
+                string spriority = "";
+                if (timerElement.Element("priority") != null)
+                {
+                    spriority = timerElement.Element("priority").Value;
+                }
+                string slifetime = "";
+                if (timerElement.Element("lifetime") != null)
+                {
+                    slifetime = timerElement.Element("lifetime").Value;
+                }
+                timers.Add(new Timer(tid, chid, chname, name, aux, sflags, swdays, sday, sstart, sstop, spriority, slifetime));
+            }
+            return timers;
+        }
+
+        public async Task<bool> AddTimer(EPGEntry entry)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string xmlstring = await client.GetStringAsync(settings.BaseURL + "timers.xml?action=add&chid=" + entry.ChannelID + "&eventid=" + entry.EventID);
+            var xml = XDocument.Parse(xmlstring);
+            if(xml.Element("added")!=null)
+            {
+                string added = xml.Element("added").Value;
+                if (added == "true")
+                    return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> AddTimer(Timer timer)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string xmlstring = await client.GetStringAsync(settings.BaseURL + "timers.xml?action=add&" + timer.AddCmd());
+            var xml = XDocument.Parse(xmlstring);
+            if (xml.Element("added") != null)
+            {
+                string added = xml.Element("added").Value;
+                if (added == "true")
+                    return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> OnOffTimer(Timer timer)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string xmlstring = await client.GetStringAsync(settings.BaseURL + "timers.xml?action=onoff&id=" + WebUtility.UrlEncode(timer.TimerID));
+            var xml = XDocument.Parse(xmlstring);
+            if (xml.Element("onoff") != null)
+            {
+                string onoff = xml.Element("onoff").Value;
+                if (onoff == "successful")
+                    return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteTimer(Timer timer)
+        {
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            HttpClient client = new HttpClient(handler);
+            string xmlstring = await client.GetStringAsync(settings.BaseURL + "timers.xml?action=delete&id=" + WebUtility.UrlEncode(timer.TimerID));
+            var xml = XDocument.Parse(xmlstring);
+            if (xml.Element("deleted") != null)
+            {
+                string deleted = xml.Element("deleted").Value;
+                if (deleted == "true")
+                    return true;
             }
             return false;
         }

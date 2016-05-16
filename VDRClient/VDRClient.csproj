@@ -98,6 +98,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddEPGEntryTimerContentDialog.xaml.cs">
+      <DependentUpon>AddEPGEntryTimerContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,7 @@
     <Compile Include="MVVM\EPGPageViewModel.cs" />
     <Compile Include="MVVM\RecordingsPageViewModel.cs" />
     <Compile Include="MVVM\SettingsPageViewModel.cs" />
+    <Compile Include="MVVM\TimersViewModel.cs" />
     <Compile Include="MVVM\TVPageViewModel.cs" />
     <Compile Include="MVVM\ViewRecordingPageViewModel.cs" />
     <Compile Include="ProfilesContentDialog.xaml.cs">
@@ -141,6 +145,15 @@
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TimerContentDialog.xaml.cs">
+      <DependentUpon>TimerContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimerListBoxItem.xaml.cs">
+      <DependentUpon>TimerListBoxItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TimersPage.xaml.cs">
+      <DependentUpon>TimersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TVPage.xaml.cs">
       <DependentUpon>TVPage.xaml</DependentUpon>
     </Compile>
@@ -150,6 +163,7 @@
     <Compile Include="VDR\EPGEntry.cs" />
     <Compile Include="VDR\Recording.cs" />
     <Compile Include="VDR\Settings.cs" />
+    <Compile Include="VDR\Timer.cs" />
     <Compile Include="VDR\VDR.cs" />
     <Compile Include="VDR\VDRList.cs" />
     <Compile Include="VDR\XmlApiVersion.cs" />
@@ -182,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AddEPGEntryTimerContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EPGListBoxItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -230,6 +248,18 @@
     <Page Include="SplitViewStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TimerContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimerListBoxItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TimersPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TVPage.xaml">
       <SubType>Designer</SubType>

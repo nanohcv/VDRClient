@@ -1,0 +1,45 @@
+﻿<UserControl
+    x:Class="VDRClient.TimerListBoxItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VDRClient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="wideView">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="col2.Width" Value="150" />
+                        <Setter Target="col3.Width" Value="200" />
+                        <Setter Target="col4.Width" Value="*" />
+                        <Setter Target="TimeTextBlock.(Grid.Row)" Value="0" />
+                        <Setter Target="TimeTextBlock.(Grid.Column)" Value="2" />
+                        <Setter Target="NameTextBlock.(Grid.Row)" Value="0" />
+                        <Setter Target="NameTextBlock.(Grid.Column)" Value="3" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="col1" Width="40" />
+            <ColumnDefinition x:Name="col2" Width="*" />
+            <ColumnDefinition x:Name="col3" Width="0" />
+            <ColumnDefinition x:Name="col4" Width="0" />
+        </Grid.ColumnDefinitions>
+        <CheckBox Grid.Row="0" Grid.Column="0" x:Name="ActiveCheckBox" IsEnabled="False" IsChecked="{Binding Path=Active, Mode=OneWay}" />
+        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="ChannelNameTextBlock" Text="{Binding Path=ChannelName, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TimeTextBlock" Text="{Binding Path=TimeString, Mode=OneWay}" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="NameTextBlock" Text="{Binding Path=Name, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" />
+    </Grid>
+</UserControl>

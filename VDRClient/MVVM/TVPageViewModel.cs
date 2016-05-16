@@ -152,7 +152,7 @@ namespace VDRClient.MVVM
                 selectedChannel = value;
                 if (selectedChannel != null)
                 {
-                    SwitchToChannel(selectedChannel.ChannelID);
+                    SwitchToChannel();
                 }
                 NotifyPropertyChanged("SelectedChannel");
             }
@@ -271,11 +271,11 @@ namespace VDRClient.MVVM
             }
         }
 
-        private async void SwitchToChannel(string channelid)
+        private async void SwitchToChannel()
         {
             try
             {
-                CurrentEPG = await vdr.GetCurrentEPGEntry(channelid);
+                CurrentEPG = await vdr.GetCurrentEPGEntry(SelectedChannel.ChannelID);
             }
             catch (Exception ex)
             {
@@ -287,7 +287,15 @@ namespace VDRClient.MVVM
                 LogWriter.WriteToLog(msg);
                 LogWriter.WriteLogToFile();
             }
-            MediaSource = new Uri(settings.BaseURL + "stream.ts?chid=" + channelid + "&preset=" + settings.Profile);
+            if(SelectedChannel.IsRadio)
+            {
+                MediaSource = new Uri(settings.BaseURL + "stream.ts?chid=" + SelectedChannel.ChannelID + "&preset=" + settings.AudioProfile);
+            }
+            else
+            {
+                MediaSource = new Uri(settings.BaseURL + "stream.ts?chid=" + SelectedChannel.ChannelID + "&preset=" + settings.Profile);
+            }
+            
             SelectedChannel = null;
             if(this.HandleMobileView != null)
             {

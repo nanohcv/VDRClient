@@ -131,5 +131,12 @@ namespace VDRClient
             this.mainFrame.Navigate(typeof(RecordingsPage), this);
             this.RecordingsButton.IsChecked = false;
         }
+
+        private void TimersButton_Checked(object sender, RoutedEventArgs e)
+        {
+            this.mainSplitView.IsPaneOpen = false;
+            this.mainFrame.Navigate(typeof(TimersPage), this);
+            this.TimersButton.IsChecked = false;
+        }
     }
 }

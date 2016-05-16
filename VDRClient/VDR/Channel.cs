@@ -22,6 +22,7 @@ namespace VDRClient.VDR
         private string epgtitle;
 
         public string ChannelID { get; private set; }
+        public bool IsRadio { get; private set; }
         public string Name { get; private set; }
         public string ShortName { get; private set; }
         public string LogoURL { get; private set; }
@@ -41,9 +42,10 @@ namespace VDRClient.VDR
             }
         }
 
-        public Channel(string id, string name, string shortname, string logo)
+        public Channel(string id, bool isradio, string name, string shortname, string logo)
         {
             ChannelID = id;
+            IsRadio = isradio;
             Name = name;
             ShortName = shortname;
             LogoURL = logo;

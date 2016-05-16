@@ -15,6 +15,7 @@ namespace VDRClient.VDR
         private string username;
         private string password;
         private string profile;
+        private string audioprofile;
 
         public string Name
         {
@@ -58,6 +59,12 @@ namespace VDRClient.VDR
             set { profile = value; }
         }
 
+        public string AudioProfile
+        {
+            get { return audioprofile; }
+            set { audioprofile = value; }
+        }
+
         public string BaseURL
         {
             get
@@ -75,6 +82,7 @@ namespace VDRClient.VDR
             username = "xmlapi";
             password = "";
             profile = "Mid";
+            audioprofile = "Audio";
         }
 
         public Settings(Settings obj)
@@ -85,6 +93,7 @@ namespace VDRClient.VDR
             this.username = obj.username;
             this.password = obj.password;
             this.profile = obj.profile;
+            this.audioprofile = obj.audioprofile;
         }
 
         public override string ToString()

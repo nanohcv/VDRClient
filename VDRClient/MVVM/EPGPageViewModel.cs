@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -20,6 +22,8 @@ namespace VDRClient.MVVM
                 PropertyChanged(this, new PropertyChangedEventArgs(info));
             }
         }
+
+        private ResourceLoader resourceLoader = ResourceLoader.GetForViewIndependentUse("Resources");
 
         private List<VDR.ChannelGroup> channelList;
         public List<VDR.ChannelGroup> ChannelList
@@ -62,6 +66,21 @@ namespace VDRClient.MVVM
             {
                 currentEPGEntries = value;
                 NotifyPropertyChanged("CurrentEPGEntries");
+            }
+        }
+
+        private VDR.EPGEntry selectedEPGEntry;
+        public VDR.EPGEntry SelectedEPGEntry
+        {
+            get { return selectedEPGEntry; }
+            set
+            {
+                selectedEPGEntry = value;
+                NotifyPropertyChanged("SelectedEPGEntry");
+                if(selectedEPGEntry != null)
+                {
+                    ListBox_SelectionChanged();
+                }
             }
         }
 
@@ -140,6 +159,7 @@ namespace VDRClient.MVVM
                                       select channel).FirstOrDefault();
                     entries[i].ChannelName = ch.Name;
                 }
+                SelectedEPGEntry = null;
                 SearchResult = entries.Where(x => x.Stop > DateTime.Now).ToList().OrderBy(x => x.Start).ToList();
                 SearchResultVisible = Visibility.Visible;
             }
@@ -188,6 +208,7 @@ namespace VDRClient.MVVM
                                       select chname).FirstOrDefault();
                     entries[i].ChannelName = ch.Name;
                 }
+                SelectedEPGEntry = null;
                 CurrentEPGEntries = entries.Where(x => x.Stop > DateTime.Now).ToList();
             }
             catch (Exception ex)
@@ -199,6 +220,33 @@ namespace VDRClient.MVVM
                 }
                 LogWriter.WriteToLog(msg);
                 LogWriter.WriteLogToFile();
+            }
+        }
+
+        public async void ListBox_SelectionChanged()
+        {
+            if(SelectedEPGEntry != null)
+            {
+                AddEPGEntryTimerContentDialog dlg = new AddEPGEntryTimerContentDialog(SelectedEPGEntry.Title);
+                var result = await dlg.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    try
+                    {
+                        await vdr.AddTimer(SelectedEPGEntry);
+                    }
+                    catch (Exception ex)
+                    {
+                        string msg = ex.Message;
+                        if (ex.InnerException != null)
+                        {
+                            msg += "\r\n" + ex.InnerException.Message;
+                        }
+                        LogWriter.WriteToLog(msg);
+                        LogWriter.WriteLogToFile();
+                    }
+                }
+                SelectedEPGEntry = null;
             }
         }
     }

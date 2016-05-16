@@ -255,4 +255,49 @@
   <data name="SplitViewRecordingsButton.Content" xml:space="preserve">
     <value>Recordings</value>
   </data>
+  <data name="SplitViewTimersButton.Content" xml:space="preserve">
+    <value>Timers</value>
+  </data>
+  <data name="TimersPage_AddButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="TimersPage_TitleTextBlock.Text" xml:space="preserve">
+    <value>Timers</value>
+  </data>
+  <data name="TimerContentDialog.PrimaryButtonText" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="TimerContentDialog.SecondaryButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TimerContentDialog.Title" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="TimerContentDialog_ActionTextBlock.Text" xml:space="preserve">
+    <value>Action:</value>
+  </data>
+  <data name="TimerContentDialog_DeleteRadioButton.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TimerContentDialog_OnOffRadioButton.Content" xml:space="preserve">
+    <value>On / Off</value>
+  </data>
+  <data name="record" xml:space="preserve">
+    <value>Record?</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="AddEPGEntryTimerContentDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="AddEPGEntryTimerContentDialog.SecondaryButtonText" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="AddEPGEntryTimerContentDialog_RecordTextBlock.Text" xml:space="preserve">
+    <value>Record?</value>
+  </data>
 </root>

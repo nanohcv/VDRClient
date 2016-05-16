@@ -188,7 +188,24 @@ namespace VDRClient.MVVM
             }
         }
 
+        private ICommand searchAudioProfilesCommand;
+
+        public ICommand SearchAudioProfilesCommand
+        {
+            get
+            {
+                if (searchAudioProfilesCommand == null)
+                {
+                    searchAudioProfilesCommand = new RelayCommand(
+                        param => this.searchAudioProfiles(),
+                        param => true);
+                }
+                return searchAudioProfilesCommand;
+            }
+        }
+
         public bool SearchingProfiles { get; private set; }
+        public bool SearchingAudioProfiles { get; private set; }
 
         private async void searchProfiles()
         {
@@ -224,6 +241,46 @@ namespace VDRClient.MVVM
                 if(result == ContentDialogResult.Primary)
                 {
                     vdrSettings.Profile = profilesDlg.SelectedProfile;
+                    NotifyPropertyChanged("VDRSettings");
+                }
+            }
+
+        }
+
+        private async void searchAudioProfiles()
+        {
+            VDR.VDR vdr = new VDR.VDR(vdrSettings);
+            List<string> profiles = null;
+            try
+            {
+                SearchingAudioProfiles = true;
+                NotifyPropertyChanged("SearchingAudioProfiles");
+                profiles = await vdr.GetProfiles();
+                SearchingAudioProfiles = false;
+                NotifyPropertyChanged("SearchingAudioProfiles");
+            }
+            catch (Exception ex)
+            {
+                SearchingAudioProfiles = false;
+                NotifyPropertyChanged("SearchingAudioProfiles");
+                string msg = ex.Message;
+                if (ex.InnerException != null)
+                {
+                    msg += "\r\n" + ex.InnerException.Message;
+                }
+                LogWriter.WriteToLog(msg);
+                LogWriter.WriteLogToFile();
+                MessageDialog errdlg = new MessageDialog(msg);
+                await errdlg.ShowAsync();
+                return;
+            }
+            if (profiles != null && profiles.Count > 0)
+            {
+                ProfilesContentDialog profilesDlg = new ProfilesContentDialog(profiles);
+                ContentDialogResult result = await profilesDlg.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    vdrSettings.AudioProfile = profilesDlg.SelectedProfile;
                     NotifyPropertyChanged("VDRSettings");
                 }
             }
