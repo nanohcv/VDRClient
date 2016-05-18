@@ -1,0 +1,106 @@
+﻿<Page
+    x:Class="VDRClient.EPGPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VDRClient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="epgpage"
+    mc:Ignorable="d">
+
+    <Grid Background="#050035">
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="400" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="DescrCheckBox.(RelativePanel.Below)" Value="{x:Null}" />
+                        <Setter Target="DescrCheckBox.(RelativePanel.RightOf)" Value="InfoCheckBox" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="GroupGrid" Visibility="{Binding Path=EPGPageVisible, Mode=TwoWay}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="500" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ComboBox Grid.Row="0" x:Name="GroupComboBox" x:Uid="EPGPage_GroupComboBox" ItemsSource="{Binding Path=ChannelList}" SelectedItem="{Binding Path=SelectedGroup, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="10,10,10,10" />
+        </Grid>
+        <Grid Grid.Row="0" x:Name="SearchGrid" Visibility="{Binding Path=SearchResultVisible, Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" x:Uid="EPGPage_SearchResultTextBlock" FontSize="25" FontWeight="Bold" Text="Search result" Margin="10,10,10,0" />
+            <Rectangle Grid.Row="1" Height="2" Fill="White" Margin="10,10,10,10" />
+        </Grid>
+        <Pivot Grid.Row="1" x:Name="ChannelsPivot" Margin="10,10,10,10" ItemsSource="{Binding Path=SelectedItem, ElementName=GroupComboBox}" SelectedItem="{Binding Path=SelectedChannel, Mode=TwoWay}" Visibility="{Binding Path=EPGPageVisible, Mode=TwoWay}" >
+            <Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="64" Height="40"  CornerRadius="10" Background="#F1F1F1">
+                            <Border.Child>
+                                <Rectangle>
+                                    <Rectangle.Fill>
+                                        <ImageBrush Stretch="Uniform" ImageSource="{Binding LogoURL, Mode=OneWay}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Border.Child>
+                        </Border>
+                        <TextBlock Text="{Binding Path=Name, Mode=OneWay}" Margin="10,0,0,0" />
+                    </StackPanel>
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.ItemContainerStyle>
+                <Style TargetType="PivotItem">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </Pivot.ItemContainerStyle>
+            <Pivot.ItemTemplate>
+                <DataTemplate>
+                    <ListBox Background="Transparent" ItemsSource="{Binding Path=DataContext.CurrentEPGEntries, ElementName=epgpage, Mode=OneWay}" SelectedItem="{Binding Path=DataContext.SelectedEPGEntry, ElementName=epgpage, Mode=TwoWay}"  Margin="0,10,0,0">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <local:EPGListBoxItem />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DataTemplate>
+            </Pivot.ItemTemplate>
+        </Pivot>
+        <ListBox Grid.Row="1" Background="Transparent" ItemsSource="{Binding Path=SearchResult, Mode=OneWay}" SelectedItem="{Binding Path=SelectedEPGEntry, Mode=TwoWay}" Margin="10,10,10,10" Visibility="{Binding Path=SearchResultVisible, Mode=OneWay}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:EPGListBoxItem />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="500" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <AutoSuggestBox Grid.Row="0" Grid.Column="0" x:Name="searchBox" x:Uid="EPGPage_SearchBox" PlaceholderText="Search" QueryIcon="Find" Text="{Binding Path=SearchText, Mode=TwoWay}" QuerySubmitted="{x:Bind Path=ViewModel.SearchBox_QuerySubmitted}" HorizontalAlignment="Stretch" Margin="10,10,10,10" />
+            <RelativePanel Grid.Row="1" Grid.Column="0" Margin="10,0,10,10">
+                <CheckBox x:Name="TitleCheckBox" x:Uid="EPGPage_TitleCheckBox" Content="Title" IsChecked="{Binding Path=SearchTitle, Mode=TwoWay}" />
+                <CheckBox x:Name="InfoCheckBox" x:Uid="EPGPage_InfoCheckBox" Content="Info" RelativePanel.RightOf="TitleCheckBox" IsChecked="{Binding Path=SearchInfo, Mode=TwoWay}" />
+                <CheckBox x:Name="DescrCheckBox" x:Uid="EPGPage_DescrCheckBox" Content="Description" RelativePanel.Below="TitleCheckBox" IsChecked="{Binding Path=SearchDescr, Mode=TwoWay}" />
+            </RelativePanel>
+        </Grid>
+    </Grid>
+</Page>
