@@ -25,6 +25,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Rectangle Grid.Row="3" Height="2" Fill="White" HorizontalAlignment="Stretch" Margin="10,10,10,10" />
-        <Button Grid.Row="4" x:Name="AddButton" x:Uid="TimersPage_AddButton" Content="Add" Width="150" Margin="10,0,10,10" />
+        <Button Grid.Row="4" x:Name="AddButton" x:Uid="TimersPage_AddButton" Content="Add" Command="{Binding Path=AddCommand}" Width="150" Margin="10,0,10,10" />
     </Grid>
 </Page>

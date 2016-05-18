@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="38763KarlWintermann.VDRClient" Publisher="CN=12323B69-18A7-457A-A827-2F8AEF632469" Version="1.2.0.0" />
+  <Identity Name="38763KarlWintermann.VDRClient" Publisher="CN=12323B69-18A7-457A-A827-2F8AEF632469" Version="1.3.0.0" />
   <mp:PhoneIdentity PhoneProductId="a0f9a6de-954c-4741-8e9b-0690eb421167" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>VDR Client</DisplayName>

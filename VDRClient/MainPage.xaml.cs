@@ -23,6 +23,7 @@ namespace VDRClient
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public Frame MainFrame { get { return this.mainFrame; } }
 
         public MainPage()
         {

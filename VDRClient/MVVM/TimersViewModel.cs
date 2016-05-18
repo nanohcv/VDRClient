@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 
 namespace VDRClient.MVVM
@@ -42,6 +43,22 @@ namespace VDRClient.MVVM
             }
         }
 
+        private ICommand addCommand;
+
+        public ICommand AddCommand
+        {
+            get
+            {
+                if (addCommand == null)
+                {
+                    addCommand = new RelayCommand(
+                        param => this.add(),
+                        param => true);
+                }
+                return addCommand;
+            }
+        }
+
         private VDR.Settings settings;
         private VDR.VDR vdr;
         public TimersViewModel(VDR.Settings settings)
@@ -67,6 +84,11 @@ namespace VDRClient.MVVM
                 LogWriter.WriteToLog(msg);
                 LogWriter.WriteLogToFile();
             }
+        }
+
+        private void add()
+        {
+            Global.MainPage.MainFrame.Navigate(typeof(NewTimerPage));
         }
 
         public async void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

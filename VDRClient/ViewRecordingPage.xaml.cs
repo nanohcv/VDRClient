@@ -107,6 +107,7 @@ namespace VDRClient
             {
                 JumpOptionsGrid.Visibility = Visibility.Collapsed;
                 TitleGrid.Visibility = Visibility.Collapsed;
+                mediaPlayer.Margin = new Thickness(0, 0, 0, 0);
                 Global.MainPage.FullScreen(true);
                 ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
                 var qualifiers = Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().QualifierValues;
@@ -122,6 +123,7 @@ namespace VDRClient
             {
                 JumpOptionsGrid.Visibility = Visibility.Visible;
                 TitleGrid.Visibility = Visibility.Visible;
+                mediaPlayer.Margin = new Thickness(10, 5, 10, 5);
                 Global.MainPage.FullScreen(false);
                 ApplicationView.GetForCurrentView().ExitFullScreenMode();
                 var qualifiers = Windows.ApplicationModel.Resources.Core.ResourceContext.GetForCurrentView().QualifierValues;

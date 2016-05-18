@@ -1,0 +1,96 @@
+﻿<Page
+    x:Class="VDRClient.NewTimerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VDRClient"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:IntToStringConverter x:Key="IntConverter" />
+    </Page.Resources>
+
+    <Grid Background="#050035">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="500" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="NewTimerTextBlock" x:Uid="NewTimerPage_NewTimerTextBlock" Text="New timer" FontSize="25" FontWeight="Bold" Margin="10,10,10,0" />
+        <Rectangle Grid.Row="1" Grid.Column="0" Height="2" Fill="White" HorizontalAlignment="Stretch" Margin="10,10,10,10" />
+        <ScrollViewer Grid.Row="2" Grid.Column="0" Margin="10,10,10,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ComboBox Grid.Row="0" x:Name="ChannelGroupComboBox" x:Uid="NewTimerPage_ChannelGroupComboBox" Header="Channel group:" ItemsSource="{Binding Path=ChannelList, Mode=OneWay}" SelectedItem="{Binding Path=SelectedChannelGroup, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="0,10,0,10" />
+                <ComboBox Grid.Row="1" x:Name="ChannelComboBox" x:Uid="NewTimerPage_ChannelComboBox" Header="Channel:" ItemsSource="{Binding Path=SelectedChannelGroup, Mode=OneWay}" SelectedItem="{Binding Path=SelectedChannel, Mode=TwoWay}"  HorizontalAlignment="Stretch" Margin="0,10,0,10" />
+                <TextBox Grid.Row="2" x:Name="NameTextBox" x:Uid="NewTimerPage_NameTextBox" Header="Name:" Text="{Binding Path=Timer.Name, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="0,20,0,10" />
+                <TextBox Grid.Row="3" x:Name="DescriptionTextBox" x:Uid="NewTimerPage_DescriptionTextBox" Header="Description:" Text="{Binding Path=Timer.Aux, Mode=TwoWay}" HorizontalAlignment="Stretch" Margin="0,10,0,10" />
+                <CheckBox Grid.Row="4" x:Name="ActiveCheckBox" x:Uid="NewTimerPage_ActiveCheckBox" Content="Active" IsChecked="{Binding Path=Timer.Active, Mode=TwoWay}" Margin="0,20,0,5" />
+                <CheckBox Grid.Row="5" x:Name="UseVpsCheckBox" x:Uid="NewTimerPage_UseVpsCheckBox" Content="Use VPS" IsChecked="{Binding Path=Timer.UseVPS, Mode=TwoWay}" Margin="0,5,0,10" />
+                <TextBlock Grid.Row="6" x:Name="WeekDaysTextBlock" x:Uid="NewTimerPage_WeekDaysTextBlock" Text="Weekdays:" Margin="0,20,0,10" />
+                <Grid Grid.Row="7" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="0" Grid.Column="0" x:Name="MondayCheckBox" x:Uid="NewTimerPage_MondayCheckBox" Content="Mon" IsChecked="{Binding Path=Timer.WeekDays[0], Mode=TwoWay}" />
+                    <CheckBox Grid.Row="0" Grid.Column="1" x:Name="TuesdayCheckBox" x:Uid="NewTimerPage_TuesdayCheckBox" Content="Tue" IsChecked="{Binding Path=Timer.WeekDays[1], Mode=TwoWay}" />
+                    <CheckBox Grid.Row="0" Grid.Column="2" x:Name="WednesdayCheckBox" x:Uid="NewTimerPage_WednesdayCheckBox" Content="Wed" IsChecked="{Binding Path=Timer.WeekDays[2], Mode=TwoWay}" />
+                    <CheckBox Grid.Row="1" Grid.Column="0" x:Name="ThursdayCheckBox" x:Uid="NewTimerPage_ThursdayCheckBox" Content="Thu" IsChecked="{Binding Path=Timer.WeekDays[3], Mode=TwoWay}" />
+                    <CheckBox Grid.Row="1" Grid.Column="1" x:Name="FridayCheckBox" x:Uid="NewTimerPage_FridayCheckBox" Content="Fri" IsChecked="{Binding Path=Timer.WeekDays[4], Mode=TwoWay}" />
+                    <CheckBox Grid.Row="1" Grid.Column="2" x:Name="SaturdayCheckBox" x:Uid="NewTimerPage_SaturdayCheckBox" Content="Sat" IsChecked="{Binding Path=Timer.WeekDays[5], Mode=TwoWay}" />
+                    <CheckBox Grid.Row="2" Grid.Column="0" x:Name="SundayCheckBox" x:Uid="NewTimerPage_SundayCheckBox" Content="Sun" IsChecked="{Binding Path=Timer.WeekDays[6], Mode=TwoWay}" />
+                </Grid>
+                <Grid Grid.Row="8" Margin="0,20,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <DatePicker Grid.Row="0" Grid.Column="0" x:Name="DayDatePicker" x:Uid="NewTimerPage_DayDatePicker" Header="Day:" Date="{Binding Path=Timer.Day, Mode=TwoWay}" />
+                    <TimePicker Grid.Row="1" Grid.Column="0" x:Name="StartTimePicker" x:Uid="NewTimerPage_StartTimePicker" Header="Start:" Time="{Binding Path=Timer.StartTime, Mode=TwoWay}" />
+                    <TimePicker Grid.Row="2" Grid.Column="0" x:Name="StopTimePicker" x:Uid="NewTimerPage_StopTimePicker" Header="Stop:" Time="{Binding Path=Timer.StopTime, Mode=TwoWay}" />
+                </Grid>
+                <TextBox Grid.Row="9" x:Name="PriorityTextBox" x:Uid="NewTimerPage_PriorityTextBox" Header="Priority:" Text="{Binding Path=Timer.Priority, Mode=TwoWay, Converter={StaticResource IntConverter}}" Width="100" HorizontalAlignment="Left" Margin="0,20,0,5" />
+                <TextBox Grid.Row="10" x:Name="LifetimeTextBox" x:Uid="NewTimerPage_LifetimeTextBox" Header="Lifetime:" Text="{Binding Path=Timer.Lifetime, Mode=TwoWay, Converter={StaticResource IntConverter}}" Width="100" HorizontalAlignment="Left" Margin="0,5,0,10" />
+            </Grid>
+        </ScrollViewer>
+        <Rectangle Grid.Row="3" Grid.Column="0" Height="2" Fill="White" HorizontalAlignment="Stretch" Margin="10,10,10,10" />
+        <StackPanel Grid.Row="4" Grid.Column="0" Margin="10,10,10,10" Orientation="Horizontal">
+            <Button x:Name="AddButton" x:Uid="NewTimerPage_AddButton" Content="Add" Command="{Binding Path=AddCommand}" Width="150" Margin="0,0,10,0" />
+            <Button x:Name="CancelButton" x:Uid="NewTimerPage_CancelButton" Content="Cancel" Command="{Binding Path=CancelCommand}" Width="150" Margin="10,0,0,0" />
+        </StackPanel>
+    </Grid>
+</Page>

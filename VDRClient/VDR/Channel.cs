@@ -50,5 +50,10 @@ namespace VDRClient.VDR
             ShortName = shortname;
             LogoURL = logo;
         }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

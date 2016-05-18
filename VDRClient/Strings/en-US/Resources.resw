@@ -300,4 +300,70 @@
   <data name="AddEPGEntryTimerContentDialog_RecordTextBlock.Text" xml:space="preserve">
     <value>Record?</value>
   </data>
+  <data name="NewTimerPage_ActiveCheckBox.Content" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="NewTimerPage_AddButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="NewTimerPage_CancelButton.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="NewTimerPage_ChannelComboBox.Header" xml:space="preserve">
+    <value>Channel:</value>
+  </data>
+  <data name="NewTimerPage_ChannelGroupComboBox.Header" xml:space="preserve">
+    <value>Channel group:</value>
+  </data>
+  <data name="NewTimerPage_DayDatePicker.Header" xml:space="preserve">
+    <value>Day:</value>
+  </data>
+  <data name="NewTimerPage_DescriptionTextBox.Header" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="NewTimerPage_FridayCheckBox.Content" xml:space="preserve">
+    <value>Fri</value>
+  </data>
+  <data name="NewTimerPage_LifetimeTextBox.Header" xml:space="preserve">
+    <value>Lifetime:</value>
+  </data>
+  <data name="NewTimerPage_MondayCheckBox.Content" xml:space="preserve">
+    <value>Mon</value>
+  </data>
+  <data name="NewTimerPage_NameTextBox.Header" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="NewTimerPage_NewTimerTextBlock.Text" xml:space="preserve">
+    <value>New timer</value>
+  </data>
+  <data name="NewTimerPage_PriorityTextBox.Header" xml:space="preserve">
+    <value>Priority:</value>
+  </data>
+  <data name="NewTimerPage_SaturdayCheckBox.Content" xml:space="preserve">
+    <value>Sat</value>
+  </data>
+  <data name="NewTimerPage_StartTimePicker.Header" xml:space="preserve">
+    <value>Start time:</value>
+  </data>
+  <data name="NewTimerPage_StopTimePicker.Header" xml:space="preserve">
+    <value>Stop:</value>
+  </data>
+  <data name="NewTimerPage_SundayCheckBox.Content" xml:space="preserve">
+    <value>Sun</value>
+  </data>
+  <data name="NewTimerPage_ThursdayCheckBox.Content" xml:space="preserve">
+    <value>Thu</value>
+  </data>
+  <data name="NewTimerPage_TuesdayCheckBox.Content" xml:space="preserve">
+    <value>Tue</value>
+  </data>
+  <data name="NewTimerPage_UseVpsCheckBox.Content" xml:space="preserve">
+    <value>Use VPS</value>
+  </data>
+  <data name="NewTimerPage_WednesdayCheckBox.Content" xml:space="preserve">
+    <value>Wed</value>
+  </data>
+  <data name="NewTimerPage_WeekDaysTextBlock.Text" xml:space="preserve">
+    <value>Weekdays:</value>
+  </data>
 </root>

@@ -115,16 +115,21 @@
     <Compile Include="HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IntToStringConverter.cs" />
     <Compile Include="LogWriter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\EPGPageViewModel.cs" />
+    <Compile Include="MVVM\NewTimerPageViewModel.cs" />
     <Compile Include="MVVM\RecordingsPageViewModel.cs" />
     <Compile Include="MVVM\SettingsPageViewModel.cs" />
     <Compile Include="MVVM\TimersViewModel.cs" />
     <Compile Include="MVVM\TVPageViewModel.cs" />
     <Compile Include="MVVM\ViewRecordingPageViewModel.cs" />
+    <Compile Include="NewTimerPage.xaml.cs">
+      <DependentUpon>NewTimerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProfilesContentDialog.xaml.cs">
       <DependentUpon>ProfilesContentDialog.xaml</DependentUpon>
     </Compile>
@@ -220,6 +225,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NewTimerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ProfilesContentDialog.xaml">
       <SubType>Designer</SubType>

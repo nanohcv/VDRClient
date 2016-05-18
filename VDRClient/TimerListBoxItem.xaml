@@ -38,7 +38,7 @@
             <ColumnDefinition x:Name="col4" Width="0" />
         </Grid.ColumnDefinitions>
         <CheckBox Grid.Row="0" Grid.Column="0" x:Name="ActiveCheckBox" IsEnabled="False" IsChecked="{Binding Path=Active, Mode=OneWay}" />
-        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="ChannelNameTextBlock" Text="{Binding Path=ChannelName, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" />
+        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="ChannelNameTextBlock" Text="{Binding Path=ChannelName, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0" />
         <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TimeTextBlock" Text="{Binding Path=TimeString, Mode=OneWay}" VerticalAlignment="Center" />
         <TextBlock Grid.Row="2" Grid.Column="1" x:Name="NameTextBlock" Text="{Binding Path=Name, Mode=OneWay}" VerticalAlignment="Center" TextWrapping="Wrap" />
     </Grid>

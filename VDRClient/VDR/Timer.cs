@@ -23,6 +23,50 @@ namespace VDRClient.VDR
         public int Priority { get; set; }
         public int Lifetime { get; set; }
 
+        public DateTimeOffset Day
+        {
+            get
+            {
+                return Start;
+            }
+            set
+            {
+                Start = new DateTime(value.Year, value.Month, value.Day);
+            }
+        }
+
+        public TimeSpan StartTime
+        {
+            get
+            {
+                return new TimeSpan(Start.Hour, Start.Minute, 0);
+            }
+            set
+            {
+                Start = new DateTime(Start.Year, Start.Month, Start.Day);
+                Start += value;
+            }
+        }
+
+        public TimeSpan StopTime
+        {
+            get
+            {
+                return new TimeSpan(Stop.Hour, Stop.Minute, 0);
+            }
+            set
+            {
+                if(value < Start.TimeOfDay)
+                {
+                    Stop = new DateTime(Start.Year, Start.Month, Start.Day) + new TimeSpan(value.Hours + 24, value.Minutes, 0);
+                }
+                else
+                {
+                    Stop = new DateTime(Start.Year, Start.Month, Start.Day) + new TimeSpan(value.Hours, value.Minutes, 0);
+                }
+            }
+        }
+
         public string TimeString
         {
             get
@@ -91,7 +135,7 @@ namespace VDRClient.VDR
             ChannelName = "";
             Name = "";
             Aux = "";
-            Active = false;
+            Active = true;
             UseVPS = false;
             WeekDays = new bool[7];
             Start = DateTime.Now;
@@ -110,9 +154,9 @@ namespace VDRClient.VDR
             flags = UseVPS ? flags | 4 : flags;
             cmd += "&flags=" + flags.ToString();
             int weekdays = 0;
-            for(int i=1; i<=8;i++)
+            for(int i=0; i<7;i++)
             {
-                weekdays += WeekDays[i - 1] ? (int)Math.Pow(i, 2) : 0;
+                weekdays += WeekDays[i] ? (int)Math.Pow(2, i) : 0;
             }
             cmd += "&weekdays=" + weekdays.ToString();
             long day = 0;
